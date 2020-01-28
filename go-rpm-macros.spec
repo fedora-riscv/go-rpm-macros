@@ -17,7 +17,7 @@ Version:   3.0.8
 ExclusiveArch: %{golang_arches} %{gccgo_arches}
 
 Name:      go-rpm-macros
-Release:   4%{?dist}
+Release:   5%{?dist}
 Summary:   Build-stage rpm automation for Go packages
 
 License:   GPLv3+
@@ -162,6 +162,9 @@ install -m 0644 -vp   rpm/macros.d/macros.go-compilers-gcc \
 %{_spectemplatedir}/*.spec
 
 %changelog
+* Tue Jan 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 3.0.8-5
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
+
 * Thu Jul 25 2019 Fedora Release Engineering <releng@fedoraproject.org> - 3.0.8-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
 
