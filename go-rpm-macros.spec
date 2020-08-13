@@ -1,5 +1,5 @@
 %global forgeurl  https://pagure.io/go-rpm-macros
-Version:   3.0.8
+Version:   3.0.9
 %forgemeta
 
 #https://src.fedoraproject.org/rpms/redhat-rpm-config/pull-request/51
@@ -17,7 +17,7 @@ Version:   3.0.8
 ExclusiveArch: %{golang_arches} %{gccgo_arches}
 
 Name:      go-rpm-macros
-Release:   6%{?dist}
+Release:   1%{?dist}
 Summary:   Build-stage rpm automation for Go packages
 
 License:   GPLv3+
@@ -162,6 +162,9 @@ install -m 0644 -vp   rpm/macros.d/macros.go-compilers-gcc \
 %{_spectemplatedir}/*.spec
 
 %changelog
+* Thu Aug 13 2020 Neal Gompa <ngompa13@gmail.com> - 3.0.9-1
+- Update to 3.0.9
+
 * Mon Jul 27 2020 Fedora Release Engineering <releng@fedoraproject.org> - 3.0.8-6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
