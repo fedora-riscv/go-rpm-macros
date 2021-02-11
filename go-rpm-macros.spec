@@ -9,6 +9,9 @@ Version:   3.0.9
 # Master definition that will be written to macro files
 %global golang_arches   %{ix86} x86_64 %{arm} aarch64 ppc64le s390x
 %global gccgo_arches    %{mips}
+%if 0%{?rhel} >= 9
+%global golang_arches   x86_64 aarch64 ppc64le s390x
+%endif
 # Go sources can contain arch-specific files and our macros will package the
 # correct files for each architecture. Therefore, move gopath to _libdir and
 # make Go devel packages archful
@@ -17,7 +20,7 @@ Version:   3.0.9
 ExclusiveArch: %{golang_arches} %{gccgo_arches}
 
 Name:      go-rpm-macros
-Release:   2%{?dist}
+Release:   3%{?dist}
 Summary:   Build-stage rpm automation for Go packages
 
 License:   GPLv3+
@@ -162,6 +165,9 @@ install -m 0644 -vp   rpm/macros.d/macros.go-compilers-gcc \
 %{_spectemplatedir}/*.spec
 
 %changelog
+* Thu Feb 11 2021 Jeff Law  <law@redhat.com> - 3.0.9-3
+- Drop 32 bit arches in EL 9 (originally from Petr Sabata)
+
 * Tue Jan 26 2021 Fedora Release Engineering <releng@fedoraproject.org> - 3.0.9-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
 
