@@ -1,5 +1,5 @@
 %global forgeurl  https://pagure.io/go-rpm-macros
-Version:   3.0.9
+Version:   3.0.10
 %forgemeta
 
 #https://src.fedoraproject.org/rpms/redhat-rpm-config/pull-request/51
@@ -20,7 +20,7 @@ Version:   3.0.9
 ExclusiveArch: %{golang_arches} %{gccgo_arches}
 
 Name:      go-rpm-macros
-Release:   3%{?dist}
+Release:   1%{?dist}
 Summary:   Build-stage rpm automation for Go packages
 
 License:   GPLv3+
@@ -165,6 +165,9 @@ install -m 0644 -vp   rpm/macros.d/macros.go-compilers-gcc \
 %{_spectemplatedir}/*.spec
 
 %changelog
+* Mon Apr 26 2021 Alejandro Sáez <asm@redhat.com> - 3.0.10-1
+- Update to 3.0.10
+
 * Thu Feb 11 2021 Jeff Law  <law@redhat.com> - 3.0.9-3
 - Drop 32 bit arches in EL 9 (originally from Petr Sabata)
 
