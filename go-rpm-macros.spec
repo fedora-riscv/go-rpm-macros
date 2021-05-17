@@ -1,5 +1,5 @@
 %global forgeurl  https://pagure.io/go-rpm-macros
-Version:   3.0.10
+Version:   3.0.11
 %forgemeta
 
 #https://src.fedoraproject.org/rpms/redhat-rpm-config/pull-request/51
@@ -165,6 +165,9 @@ install -m 0644 -vp   rpm/macros.d/macros.go-compilers-gcc \
 %{_spectemplatedir}/*.spec
 
 %changelog
+* Mon May 17 2021 Robert-André Mauchin <zebob.m@gmail.com> - 3.0.11-1
+- Update to 3.0.11
+
 * Mon Apr 26 2021 Alejandro Sáez <asm@redhat.com> - 3.0.10-1
 - Update to 3.0.10
 
