@@ -1,0 +1,3 @@
+PURPOSE of /tools/go-rpm-macros/Sanity/gobuild-etcd
+Description: golang rpm macros usage building etcd
+Author: Jan Kuřík <jkurik@redhat.com>

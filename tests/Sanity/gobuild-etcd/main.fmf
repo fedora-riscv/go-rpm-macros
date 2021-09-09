@@ -1,0 +1,17 @@
+summary: golang rpm macros usage building etcd
+description: ''
+contact: Jan Kuřík <jkurik@redhat.com>
+component:
+- golang
+test: ./runtest.sh
+framework: beakerlib
+recommend:
+- golang
+- go-rpm-macros
+- go-srpm-macros
+- /usr/bin/yumdownloader
+- /usr/bin/yum-builddep
+- /usr/bin/rpmbuild
+duration: 2h
+extra-summary: /tools/go-rpm-macros/Sanity/gobuild-etcd
+extra-task: /tools/go-rpm-macros/Sanity/gobuild-etcd
