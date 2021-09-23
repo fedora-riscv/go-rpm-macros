@@ -2,8 +2,8 @@
 # vim: dict+=/usr/share/beakerlib/dictionary.vim cpt=.,w,b,u,t,i,k
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
-#   runtest.sh of /tools/go-rpm-macros/Sanity/gobuild-etcd
-#   Description: golang rpm macros usage building etcd
+#   runtest.sh of /tools/go-rpm-macros/Sanity/gobuild-grafana
+#   Description: golang rpm macros usage building grafana
 #   Author: Jan Kuřík <jkurik@redhat.com>
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -37,7 +37,7 @@ set -o pipefail
 
 rlJournalStart
     rlPhaseStartSetup
-        rlRun "TmpDir=\$(mktemp -d)" 0 "Creating tmp directory"
+        rlRun "TmpDir=\$(mktemp -d /var/tmp/XXXXXXX)" 0 "Creating tmp directory"
         rlRun "pushd $TmpDir"
     rlPhaseEnd
 
@@ -48,16 +48,23 @@ rlJournalStart
         rlAssertNotEquals "Checking if %gotest macro is defined" "$gotest_string" "%gotest"
     rlPhaseEnd
 
-    rlPhaseStart FAIL "setup etcd sources"
-        rlRun "SRPM=\$(basename \$(yumdownloader --source --url etcd | tail -n 1))"
-        rlRun "yumdownloader --source etcd"
+    rlPhaseStart FAIL "setup grafana sources"
+        rlRun "SRPM=\$(basename \$(yumdownloader --source --url grafana | tail -n 1))"
+        rlRun "yumdownloader --source grafana"
         rlRun "yum-builddep --enablerepo=\* -y --srpm ${SRPM}"
+        rlRun "rpm -i -D '_topdir $TmpDir' ${SRPM}"
+        rlRun "sed -i 's/^\s*%define\s*compile_frontend\s.*/%define compile_frontend 0/g' \
+            SPECS/grafana.spec" 0 "Make sure we build only the golang part, no JS stuff"
     rlPhaseEnd
 
-    rlPhaseStartTest "rpmbuild etcd"
-        rlRun "rpmbuild --define='_topdir $TmpDir' --rebuild --nocheck ${SRPM} \
-            |& tee etcd.rpmbuild.log"
-        rlFileSubmit "etcd.rpmbuild.log"
+    rlPhaseStartTest "rpmbuild grafana"
+        rlRun "rpmbuild --showrc &> ${TmpDir}/rpm.rc"
+        rlFileSubmit "${TmpDir}/rpm.rc"
+        rlAssertGrep "%gobuild" SPECS/grafana.spec -w
+        rlAssertGrep "%gotest" SPECS/grafana.spec -w
+        rlRun "rpmbuild -bc --define='_topdir $TmpDir' SPECS/grafana.spec \
+            |& tee grafana.rpmbuild.log"
+        rlFileSubmit "grafana.rpmbuild.log"
     rlPhaseEnd
 
     rlPhaseStartCleanup

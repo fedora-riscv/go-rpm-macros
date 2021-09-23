@@ -1,7 +1,7 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
-#   Makefile of /tools/go-rpm-macros/Sanity/gobuild-etcd
-#   Description: golang rpm macros usage building etcd
+#   Makefile of /tools/go-rpm-macros/Sanity/gobuild-grafana
+#   Description: golang rpm macros usage building grafana
 #   Author: Jan Kuřík <jkurik@redhat.com>
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -23,7 +23,7 @@
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-export TEST=/tools/go-rpm-macros/Sanity/gobuild-etcd
+export TEST=/tools/go-rpm-macros/Sanity/gobuild-grafana
 export TESTVERSION=1.0
 
 BUILT_FILES=
@@ -49,7 +49,7 @@ $(METADATA): Makefile
 	@echo "Name:            $(TEST)" >> $(METADATA)
 	@echo "TestVersion:     $(TESTVERSION)" >> $(METADATA)
 	@echo "Path:            $(TEST_DIR)" >> $(METADATA)
-	@echo "Description:     golang rpm macros usage building etcd" >> $(METADATA)
+	@echo "Description:     golang rpm macros usage building" >> $(METADATA)
 	@echo "Type:            Sanity" >> $(METADATA)
 	@echo "TestTime:        2h" >> $(METADATA)
 	@echo "RunFor:          golang" >> $(METADATA)
