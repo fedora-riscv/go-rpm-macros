@@ -1,5 +1,5 @@
 %global forgeurl  https://pagure.io/go-rpm-macros
-Version:   3.0.11
+Version:   3.0.12
 %forgemeta
 
 #https://src.fedoraproject.org/rpms/redhat-rpm-config/pull-request/51
@@ -165,6 +165,9 @@ install -m 0644 -vp   rpm/macros.d/macros.go-compilers-gcc \
 %{_spectemplatedir}/*.spec
 
 %changelog
+* Sat Jan 22 2022 Robert-André Mauchin <zebob.m@gmail.com> - 3.0.12-3
+- Update to 3.0.12
+
 * Thu Jan 20 2022 Fedora Release Engineering <releng@fedoraproject.org> - 3.0.11-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_36_Mass_Rebuild
 
