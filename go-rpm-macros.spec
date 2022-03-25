@@ -17,8 +17,6 @@ Version:   3.0.15
 # make Go devel packages archful
 %global gopath          %{_datadir}/gocode
 
-ExclusiveArch: %{golang_arches} %{gccgo_arches}
-
 Name:      go-rpm-macros
 Release:   %autorelease
 Summary:   Build-stage rpm automation for Go packages
@@ -77,7 +75,7 @@ This package contains the basic directory layout used by Go packages.
 %package -n go-rpm-templates
 Summary:   RPM spec templates for Go packages
 License:   MIT
-BuildArch: noarch
+# go-rpm-macros only exists on some architectures, so this package cannot be noarch
 Requires:  go-rpm-macros = %{version}-%{release}
 #https://src.fedoraproject.org/rpms/redhat-rpm-config/pull-request/51
 #Requires:  redhat-rpm-templates
@@ -96,6 +94,13 @@ for template in templates/rpm/*\.spec ; do
 done
 
 %install
+install -m 0755 -vd   %{buildroot}%{rpmmacrodir}
+
+install -m 0755 -vd   %{buildroot}%{_rpmluadir}/fedora/srpm
+install -m 0644 -vp   rpm/lua/srpm/*lua \
+                      %{buildroot}%{_rpmluadir}/fedora/srpm
+
+%ifarch %{golang_arches} %{gccgo_arches}
 # Some of those probably do not work with gcc-go right now
 # This is not intentional, but mips is not a primary Fedora architecture
 # Patches and PRs are welcome
@@ -110,12 +115,8 @@ install -m 0644 -vp   templates/rpm/*spec \
 install -m 0755 -vd   %{buildroot}%{_bindir}
 install -m 0755 bin/* %{buildroot}%{_bindir}
 
-install -m 0755 -vd   %{buildroot}%{rpmmacrodir}
 install -m 0644 -vp   rpm/macros.d/macros.go-* \
                       %{buildroot}%{rpmmacrodir}
-install -m 0755 -vd   %{buildroot}%{_rpmluadir}/fedora/srpm
-install -m 0644 -vp   rpm/lua/srpm/*lua \
-                      %{buildroot}%{_rpmluadir}/fedora/srpm
 install -m 0755 -vd   %{buildroot}%{_rpmluadir}/fedora/rpm
 install -m 0644 -vp   rpm/lua/rpm/*lua \
                       %{buildroot}%{_rpmluadir}/fedora/rpm
@@ -124,6 +125,10 @@ install -m 0644 -vp   rpm/fileattrs/*.attr \
                       %{buildroot}%{_rpmconfigdir}/fileattrs/
 install -m 0755 -vp   rpm/*\.{prov,deps} \
                       %{buildroot}%{_rpmconfigdir}/
+%else
+install -m 0644 -vp   rpm/macros.d/macros.go-srpm \
+                      %{buildroot}%{rpmmacrodir}
+%endif
 
 %ifarch %{golang_arches}
 install -m 0644 -vp   rpm/macros.d/macros.go-compilers-golang \
@@ -135,6 +140,7 @@ install -m 0644 -vp   rpm/macros.d/macros.go-compilers-gcc \
                       %{buildroot}%{_rpmconfigdir}/macros.d/macros.go-compiler-gcc
 %endif
 
+%ifarch %{golang_arches} %{gccgo_arches}
 %files
 %license LICENSE.txt
 %doc README.md
@@ -146,16 +152,6 @@ install -m 0644 -vp   rpm/macros.d/macros.go-compilers-gcc \
 %{_rpmconfigdir}/macros.d/macros.go-compiler*
 %{_rpmluadir}/fedora/rpm/*.lua
 
-%files -n go-srpm-macros
-%license LICENSE.txt
-%doc README.md
-%{_rpmconfigdir}/macros.d/macros.go-srpm
-%{_rpmluadir}/fedora/srpm/*.lua
-
-%files -n go-filesystem
-%dir %{gopath}
-%dir %{gopath}/src
-
 %files -n go-rpm-templates
 %license LICENSE-templates.txt
 %doc README.md
@@ -163,6 +159,20 @@ install -m 0644 -vp   rpm/macros.d/macros.go-compilers-gcc \
 %dir %{dirname:%{_spectemplatedir}}
 %dir %{_spectemplatedir}
 %{_spectemplatedir}/*.spec
+
+%files -n go-filesystem
+%dir %{gopath}
+%dir %{gopath}/src
+%endif
+
+# we only build go-srpm-macros on all architectures
+%files -n go-srpm-macros
+%license LICENSE.txt
+%doc README.md
+%{_rpmconfigdir}/macros.d/macros.go-srpm
+%{_rpmluadir}/fedora/srpm/*.lua
+
+
 
 %changelog
 %autochangelog
