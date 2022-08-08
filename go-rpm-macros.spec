@@ -22,7 +22,7 @@ Name:      go-rpm-macros
 Release:   %autorelease
 Summary:   Build-stage rpm automation for Go packages
 
-License:   GPLv3+
+License:   GPL-3.0-or-later
 URL:       %{forgeurl}
 Source:    %{forgesource}
 
