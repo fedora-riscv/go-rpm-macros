@@ -116,7 +116,7 @@ install -m 0644 -vp   templates/rpm/*spec \
 install -m 0755 -vd   %{buildroot}%{_bindir}
 install -m 0755 bin/* %{buildroot}%{_bindir}
 
-install -m 0644 -vp   rpm/macros.d/macros.go-* \
+install -m 0644 -vp   rpm/macros.d/macros.go-*rpm* \
                       %{buildroot}%{rpmmacrodir}
 install -m 0755 -vd   %{buildroot}%{_rpmluadir}/fedora/rpm
 install -m 0644 -vp   rpm/lua/rpm/*lua \
@@ -132,13 +132,13 @@ install -m 0644 -vp   rpm/macros.d/macros.go-srpm \
 %endif
 
 %ifarch %{golang_arches}
-install -m 0644 -vp   rpm/macros.d/macros.go-compilers-golang \
-                      %{buildroot}%{_rpmconfigdir}/macros.d/macros.go-compiler-golang
+install -m 0644 -vp   rpm/macros.d/macros.go-compilers-golang{,-pie} \
+                      %{buildroot}%{_rpmconfigdir}/macros.d/
 %endif
 
 %ifarch %{gccgo_arches}
 install -m 0644 -vp   rpm/macros.d/macros.go-compilers-gcc \
-                      %{buildroot}%{_rpmconfigdir}/macros.d/macros.go-compiler-gcc
+                      %{buildroot}%{_rpmconfigdir}/macros.d/
 %endif
 
 %ifarch %{golang_arches} %{gccgo_arches}
