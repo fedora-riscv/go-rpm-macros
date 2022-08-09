@@ -68,7 +68,7 @@ go-srpm-macros will pull in for Go packages only.
 
 %package -n go-filesystem
 Summary:   Directories used by Go packages
-License:   Public Domain
+License:   LicenseRef-Fedora-Public-Domain
 
 %description -n go-filesystem
 This package contains the basic directory layout used by Go packages.
