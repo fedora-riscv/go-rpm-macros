@@ -149,8 +149,8 @@ install -m 0644 -vp   rpm/macros.d/macros.go-compilers-gcc \
 %{_rpmconfigdir}/fileattrs/*.attr
 %{_rpmconfigdir}/*.prov
 %{_rpmconfigdir}/*.deps
-%{_rpmconfigdir}/macros.d/macros.go-rpm*
-%{_rpmconfigdir}/macros.d/macros.go-compiler*
+%{_rpmmacrodir}/macros.go-rpm*
+%{_rpmmacrodir}/macros.go-compiler*
 %{_rpmluadir}/fedora/rpm/*.lua
 
 %files -n go-rpm-templates
@@ -170,7 +170,7 @@ install -m 0644 -vp   rpm/macros.d/macros.go-compilers-gcc \
 %files -n go-srpm-macros
 %license LICENSE.txt
 %doc README.md
-%{_rpmconfigdir}/macros.d/macros.go-srpm
+%{_rpmmacrodir}/macros.go-srpm
 %{_rpmluadir}/fedora/srpm/*.lua
 
 
