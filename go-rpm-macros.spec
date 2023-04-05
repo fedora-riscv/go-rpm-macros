@@ -7,7 +7,7 @@ Version:   3.2.0
 %global _docdir_fmt     %{name}
 
 # Master definition that will be written to macro files
-%global golang_arches_future x86_64 %{arm} aarch64 ppc64le s390x
+%global golang_arches_future x86_64 %{arm} aarch64 ppc64le s390x riscv64
 %global golang_arches   %{ix86} %{golang_arches_future}
 %global gccgo_arches    %{mips}
 %if 0%{?rhel} >= 9
@@ -19,7 +19,7 @@ Version:   3.2.0
 %global gopath          %{_datadir}/gocode
 
 Name:      go-rpm-macros
-Release:   %autorelease
+Release:   %autorelease -e rv64
 Summary:   Build-stage rpm automation for Go packages
 
 License:   GPL-3.0-or-later
